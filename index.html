@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>CodeShop - Catálogo de Productos</title>
+    <!-- Bootstrap 5 CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6 (iconos modernos) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts: Tipografías elegantes -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Estilos para los menús desplegables */
+        .navbar {
+            position: relative;
+            z-index: 1000;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-toggle {
+            cursor: pointer;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 260px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            z-index: 1001;
+            border-radius: 12px;
+            overflow: visible;
+            border: 1px solid rgba(0,0,0,0.1);
+            padding: 8px 0;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        .dropdown-content > div {
+            position: relative;
+        }
+        
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 20px;
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #f8b4b4;
+            color: #000;
+            padding-left: 25px;
+        }
+        
+        /* Submenú que se despliega a la derecha */
+        .submenu {
+            position: relative;
+        }
+        
+        .submenu > a {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .submenu > a::after {
+            content: "›";
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .submenu-content {
+            display: none;
+            position: absolute;
+            left: 100%;
+            top: 0;
+            min-width: 220px;
+            background: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border-radius: 12px;
+            border: 1px solid rgba(0,0,0,0.1);
+            padding: 8px 0;
+            z-index: 1002;
+        }
+        
+        .submenu:hover .submenu-content {
+            display: block;
+        }
+        
+        .submenu-content a {
+            white-space: nowrap;
+        }
+        
+        /* Estilo para el botón MUNDIAL 2026 */
+        .mundial-btn {
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            color: #000 !important;
+            font-weight: bold;
+            border-radius: 25px;
+            padding: 8px 20px !important;
+            transition: transform 0.3s ease;
+        }
+        
+        .mundial-btn:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #ffed4e, #ffa500);
+        }
+        
+        .mundial-btn i {
+            margin-right: 8px;
+        }
+        
+        /* Responsive para móviles */
+        @media (max-width: 768px) {
+            .nav-buttons {
+                flex-direction: column;
+                align-items: stretch;
+                width: 100%;
+            }
+            
+            .dropdown {
+                width: 100%;
+            }
+            
+            .dropdown-content {
+                position: static;
+                display: none;
+                box-shadow: none;
+                border: none;
+                padding-left: 20px;
+                background: rgba(0,0,0,0.05);
+            }
+            
+            .dropdown.active .dropdown-content {
+                display: block;
+            }
+            
+            .submenu-content {
+                position: static;
+                display: none;
+                box-shadow: none;
+                border: none;
+                padding-left: 20px;
+                background: rgba(0,0,0,0.03);
+            }
+            
+            .submenu.active .submenu-content {
+                display: block;
+            }
+            
+            .submenu > a::after {
+                content: "▼";
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar con estilo glassmorphism -->
+    <nav class="navbar">
+        <a href="index.html" class="logo"><i class="fas fa-gem me-2"></i> CodeShop</a>
+        <div class="nav-buttons">
+            <a href="index.html" class="nav-link-custom">
+                <i class="fas fa-home"></i> Inicio
+            </a>
+            
+            <!-- Menú desplegable de Productos -->
+            <div class="dropdown">
+                <a href="#" class="nav-link-custom dropdown-toggle">
+                    <i class="fas fa-tags"></i> Productos
+                </a>
+                <div class="dropdown-content">
+                    <!-- Iluminación con subcategorías -->
+                    <div class="submenu">
+                        <a href="#"><i class="fas fa-lightbulb"></i> Iluminación</a>
+                        <div class="submenu-content">
+                            <a href="#"><i class="fas fa-lamp"></i> Veladores</a>
+                            <a href="#"><i class="fas fa-water"></i> Humidificadores</a>
+                            <a href="#"><i class="fas fa-crown"></i> Decorativa</a>
+                            <a href="#"><i class="fas fa-flashlight"></i> Linternas</a>
+                            <a href="#"><i class="fas fa-bolt"></i> Luces de Emergencia</a>
+                        </div>
+                    </div>
+                    <!-- Indumentaria Blanquería con subcategorías -->
+                    <div class="submenu">
+                        <a href="#"><i class="fas fa-tshirt"></i> Indumentaria Blanquería</a>
+                        <div class="submenu-content">
+                            <a href="#"><i class="fas fa-shirt"></i> Vestimenta Diaria</a>
+                            <a href="#"><i class="fas fa-gem"></i> Accesorios y Moda</a>
+                            <a href="#"><i class="fas fa-bed"></i> Ropa de Cama</a>
+                            <a href="#"><i class="fas fa-heart"></i> Peluches</a>
+                            <a href="#"><i class="fas fa-bag-shopping"></i> Bolsos y Mochilas</a>
+                            <a href="#"><i class="fas fa-bed"></i> Sábanas</a>
+                            <a href="#"><i class="fas fa-towel"></i> Toallones</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Botón MUNDIAL 2026 -->
+            <a href="#" class="nav-link-custom mundial-btn">
+                <i class="fas fa-futbol"></i> MUNDIAL 2026
+            </a>
+            
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <i class="fas fa-moon"></i> <span>Modo Oscuro</span>
+            </button>
+            <button class="cart-button" onclick="toggleCart()">
+                <i class="fas fa-shopping-bag"></i> <span>Carrito</span> (<span id="cart-count">0</span>)
+            </button>
+        </div>
+    </nav>
+
+    <!-- Catálogo de productos -->
+    <div class="container">
+        <h1><i class="fas fa-star-of-life me-2" style="font-size: 0.8em;"></i> Nuestros productos</h1>
+        <div class="products-grid" id="products-grid"></div>
+    </div>
+
+    <!-- Carrito de compras -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h2><i class="fas fa-shopping-cart"></i> Tu Carrito</h2>
+            <button class="close-cart" onclick="toggleCart()">&times;</button>
+        </div>
+        <div class="cart-items" id="cart-items"></div>
+        <div class="cart-total" id="cart-total">Total: $0</div>
+        <button class="checkout-btn" onclick="processWhatsAppOrder()">
+            <i class="fab fa-whatsapp"></i> Proceder al Pago
+        </button>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-info">
+                <div>
+                    <a href="index.html" class="footer-logo"><i class="fas fa-gem me-2"></i> CodeShop</a>
+                    <p>Tu tienda de confianza en Cosquín</p>
+                </div>
+                
+                <div>
+                    <h4 style="color: var(--text-color); margin-bottom: 1rem;">Contacto Rápido</h4>
+                    <p><i class="fab fa-whatsapp"></i> 3541-218523</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2026 CodeShop. Todos los derechos reservados para SSNKcode</p>
+                <p style="margin-top: 10px;">
+                    ¿Querés una página así? 
+                    <a href="https://wa.me/543541682310?text=Hola%2C%20quiero%20una%20p%C3%A1gina%20web%20como%20la%20de%20CodeShop%20para%20mi%20negocio" 
+                       target="_blank" 
+                       style="color: var(--primary-color); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 5px;">
+                        <i class="fab fa-whatsapp" style="font-size: 1.1rem;"></i> 3541-682310
+                    </a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- BOTÓN FLOTANTE WHATSAPP -->
+    <div class="whatsapp-float">
+        <a href="https://wa.me/543541218523" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+            <span>Pedir por WhatsApp</span>
+        </a>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Script para manejar el menú desplegable en dispositivos móviles
+        function initMobileMenus() {
+            if (window.innerWidth <= 768) {
+                // Para el dropdown principal de Productos
+                const dropdownTrigger = document.querySelector('.dropdown > .dropdown-toggle');
+                if (dropdownTrigger) {
+                    dropdownTrigger.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const dropdown = this.parentElement;
+                        dropdown.classList.toggle('active');
+                    });
+                }
+                
+                // Para los submenús
+                document.querySelectorAll('.submenu > a').forEach(trigger => {
+                    trigger.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const submenu = this.parentElement;
+                        // Cerrar otros submenús
+                        document.querySelectorAll('.submenu.active').forEach(s => {
+                            if (s !== submenu) s.classList.remove('active');
+                        });
+                        submenu.classList.toggle('active');
+                    });
+                });
+            }
+        }
+        
+        // Ejecutar al cargar y al redimensionar
+        initMobileMenus();
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                // Limpiar clases active en escritorio
+                document.querySelectorAll('.dropdown.active, .submenu.active').forEach(el => {
+                    el.classList.remove('active');
+                });
+            }
+            initMobileMenus();
+        });
+        
+        // Cerrar menús al hacer clic fuera (para móvil)
+        document.addEventListener('click', function(e) {
+            if (window.innerWidth <= 768) {
+                if (!e.target.closest('.dropdown')) {
+                    document.querySelectorAll('.dropdown.active').forEach(dropdown => {
+                        dropdown.classList.remove('active');
+                    });
+                }
+                if (!e.target.closest('.submenu')) {
+                    document.querySelectorAll('.submenu.active').forEach(submenu => {
+                        submenu.classList.remove('active');
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
