@@ -39,6 +39,98 @@
             flex-wrap: wrap;
         }
         
+        /* Estilos para la barra de búsqueda */
+        .search-container {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .search-input {
+            padding: 8px 15px;
+            padding-right: 40px;
+            border: 2px solid #ff6b6b;
+            border-radius: 25px;
+            outline: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            background: white;
+            color: #333;
+            width: 200px;
+        }
+        
+        .search-input:focus {
+            border-color: #ff8e8e;
+            box-shadow: 0 0 0 3px rgba(255,107,107,0.1);
+            width: 250px;
+        }
+        
+        .search-btn {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #ff6b6b;
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 5px 10px;
+            transition: color 0.3s ease;
+        }
+        
+        .search-btn:hover {
+            color: #ff5252;
+        }
+        
+        .clear-search {
+            position: absolute;
+            right: 35px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 5px;
+            display: none;
+        }
+        
+        .clear-search:hover {
+            color: #ff6b6b;
+        }
+        
+        .search-input:not(:placeholder-shown) ~ .clear-search {
+            display: block;
+        }
+        
+        body.dark-mode .search-input {
+            background: #2d2d2d;
+            border-color: #ff8e8e;
+            color: #fff;
+        }
+        
+        body.dark-mode .search-input::placeholder {
+            color: #aaa;
+        }
+        
+        body.dark-mode .search-btn {
+            color: #ff8e8e;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+            font-size: 1.1rem;
+        }
+        
+        .no-results i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+        
         .dropdown {
             position: relative;
             display: inline-block;
@@ -206,6 +298,108 @@
             background: linear-gradient(135deg, #ff5252, #ff7676);
         }
         
+        /* Estilos para items del carrito */
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            position: relative;
+        }
+        
+        body.dark-mode .cart-item {
+            border-bottom-color: #444;
+        }
+        
+        .cart-item-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .cart-item-info {
+            flex: 1;
+        }
+        
+        .cart-item-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .cart-item-price {
+            font-size: 0.8rem;
+            color: #e74c3c;
+            font-weight: 600;
+        }
+        
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 5px;
+        }
+        
+        .quantity-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+        
+        .quantity-btn:hover {
+            background: #ff6b6b;
+            color: white;
+            border-color: #ff6b6b;
+        }
+        
+        .cart-item-quantity span {
+            font-size: 0.9rem;
+            font-weight: 600;
+            min-width: 25px;
+            text-align: center;
+        }
+        
+        .cart-item-subtotal {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #2ecc71;
+            min-width: 70px;
+            text-align: right;
+        }
+        
+        .remove-item {
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 5px;
+            transition: color 0.2s ease;
+        }
+        
+        .remove-item:hover {
+            color: #e74c3c;
+        }
+        
+        .cart-empty {
+            text-align: center;
+            color: #999;
+            padding: 40px 20px;
+        }
+        
+        .cart-empty i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+        
         @media (max-width: 768px) {
             body {
                 padding-top: 70px;
@@ -214,6 +408,18 @@
             .nav-buttons {
                 flex-direction: column;
                 align-items: stretch;
+                width: 100%;
+            }
+            
+            .search-container {
+                width: 100%;
+            }
+            
+            .search-input {
+                width: 100%;
+            }
+            
+            .search-input:focus {
                 width: 100%;
             }
             
@@ -256,6 +462,11 @@
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
                 gap: 20px;
             }
+            
+            .cart-sidebar {
+                width: 100%;
+                right: -100%;
+            }
         }
         
         body.dark-mode .product-card {
@@ -263,6 +474,12 @@
         }
         
         body.dark-mode .product-title {
+            color: #fff;
+        }
+        
+        body.dark-mode .quantity-btn {
+            background: #2d2d2d;
+            border-color: #555;
             color: #fff;
         }
     </style>
@@ -275,6 +492,14 @@
                 <i class="fas fa-home"></i> Inicio
             </a>
             
+            <!-- Barra de búsqueda -->
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-input" placeholder="Buscar productos..." onkeyup="filterProducts()">
+                <button class="search-btn" onclick="filterProducts()">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+
             <div class="dropdown">
                 <a href="#" class="nav-link-custom dropdown-toggle">
                     <i class="fas fa-tags"></i> Productos
@@ -330,8 +555,8 @@
         </div>
         <div class="cart-items" id="cart-items"></div>
         <div class="cart-total" id="cart-total">Total: $0</div>
-        <button class="checkout-btn" onclick="processWhatsAppOrder()">
-            <i class="fab fa-whatsapp"></i> Proceder al Pago
+        <button class="checkout-btn" onclick="finalizarCompra()">
+            <i class="fab fa-whatsapp"></i> FINALIZAR COMPRA
         </button>
     </div>
 
@@ -386,7 +611,9 @@
             { name: "Humidificador Elegante", price: 14500, image: "../assets/luces/humidificadores/WhatsApp-Image-2025-12-09-at-11.40.25-AM-1-400x400.webp" }
         ];
         
+        // Estructura del carrito con cantidad
         let cart = [];
+        let currentSearchTerm = '';
         
         // Control de scroll para mostrar/ocultar navbar
         let lastScrollTop = 0;
@@ -396,21 +623,52 @@
             let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             
             if (scrollTop > lastScrollTop && scrollTop > 100) {
-                // Scroll hacia abajo - ocultar navbar
                 navbar.classList.add('hide');
             } else if (scrollTop < lastScrollTop) {
-                // Scroll hacia arriba - mostrar navbar
                 navbar.classList.remove('hide');
             }
             
             lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
         });
         
+        function searchProducts() {
+            const searchInput = document.getElementById('search-input');
+            currentSearchTerm = searchInput.value.toLowerCase().trim();
+            renderProducts();
+        }
+        
+        function clearSearch() {
+            document.getElementById('search-input').value = '';
+            currentSearchTerm = '';
+            renderProducts();
+            showNotification('Búsqueda limpiada', '#3498db');
+        }
+        
         function renderProducts() {
             const grid = document.getElementById('products-grid');
+            
+            // Filtrar productos según el término de búsqueda
+            let filteredProducts = humidificadores;
+            if (currentSearchTerm !== '') {
+                filteredProducts = humidificadores.filter(product => 
+                    product.name.toLowerCase().includes(currentSearchTerm)
+                );
+            }
+            
+            if (filteredProducts.length === 0) {
+                grid.innerHTML = `
+                    <div class="no-results" style="grid-column: 1 / -1;">
+                        <i class="fas fa-search"></i>
+                        <p>No se encontraron productos para "<strong>${currentSearchTerm}</strong>"</p>
+                        <small>Intenta con otra palabra o limpia la búsqueda</small>
+                    </div>
+                `;
+                return;
+            }
+            
             grid.innerHTML = '';
             
-            humidificadores.forEach((product) => {
+            filteredProducts.forEach((product) => {
                 const card = document.createElement('div');
                 card.className = 'product-card';
                 card.innerHTML = `
@@ -427,18 +685,146 @@
             });
         }
         
-        function addToCart(name, price, image) { cart.push({ name, price, image }); updateCartCount(); showNotification(`${name} agregado al carrito`); }
-        function updateCartCount() { document.getElementById('cart-count').textContent = cart.length; }
+        function addToCart(name, price, image) {
+            // Buscar si el producto ya existe en el carrito
+            const existingItem = cart.find(item => item.name === name);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ 
+                    name: name, 
+                    price: price, 
+                    image: image,
+                    quantity: 1
+                });
+            }
+            
+            updateCartCount();
+            renderCartItems();
+            showNotification(`${name} agregado al carrito`);
+        }
         
-        function showNotification(message) {
+        function updateCartCount() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cart-count').textContent = totalItems;
+        }
+        
+        function updateQuantity(index, newQuantity) {
+            if (newQuantity <= 0) {
+                removeFromCart(index);
+            } else {
+                cart[index].quantity = newQuantity;
+                updateCartCount();
+                renderCartItems();
+            }
+        }
+        
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartCount();
+            renderCartItems();
+            showNotification('Producto eliminado del carrito');
+        }
+        
+        function renderCartItems() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartTotalElement = document.getElementById('cart-total');
+            
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div class="cart-empty">
+                        <i class="fas fa-shopping-bag"></i>
+                        <p>Tu carrito está vacío</p>
+                        <small>¡Agrega productos para comenzar!</small>
+                    </div>
+                `;
+                cartTotalElement.textContent = 'Total: $0';
+                return;
+            }
+            
+            let total = 0;
+            cartItemsContainer.innerHTML = '';
+            
+            cart.forEach((item, index) => {
+                const subtotal = item.price * item.quantity;
+                total += subtotal;
+                
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" class="cart-item-image" onerror="this.src='https://via.placeholder.com/60x60?text=Producto'">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-price">$${item.price.toLocaleString()}</div>
+                        <div class="cart-item-quantity">
+                            <button class="quantity-btn" onclick="updateQuantity(${index}, ${item.quantity - 1})">-</button>
+                            <span>${item.quantity}</span>
+                            <button class="quantity-btn" onclick="updateQuantity(${index}, ${item.quantity + 1})">+</button>
+                        </div>
+                    </div>
+                    <div class="cart-item-subtotal">$${subtotal.toLocaleString()}</div>
+                    <button class="remove-item" onclick="removeFromCart(${index})">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                `;
+                cartItemsContainer.appendChild(cartItem);
+            });
+            
+            cartTotalElement.textContent = `Total: $${total.toLocaleString()}`;
+        }
+        
+        function finalizarCompra() {
+            if (cart.length === 0) {
+                showNotification('El carrito está vacío', '#e74c3c');
+                return;
+            }
+            
+            let message = '🛍️ *NUEVO PEDIDO - CodeShop* 🛍️\n\n';
+            message += '*DETALLE DE LA COMPRA:*\n';
+            message += '─'.repeat(30) + '\n\n';
+            
+            cart.forEach((item, index) => {
+                const subtotal = item.price * item.quantity;
+                message += `*${index + 1}. ${item.name}*\n`;
+                message += `   Cantidad: ${item.quantity} x $${item.price.toLocaleString()}\n`;
+                message += `   Subtotal: $${subtotal.toLocaleString()}\n\n`;
+            });
+            
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            message += '─'.repeat(30) + '\n';
+            message += `💰 *TOTAL: $${total.toLocaleString()}*\n\n`;
+            message += '─'.repeat(30) + '\n\n';
+            message += '_En un momento serás atendido por un asesor..._\n';
+            message += '📱 *CodeShop - Cosquín*';
+            
+            const whatsappUrl = `https://wa.me/543541682310?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+        
+        function showNotification(message, bgColor = '#27ae60') {
             const notification = document.createElement('div');
             notification.textContent = message;
-            notification.style.cssText = `position:fixed; bottom:20px; right:20px; background:#27ae60; color:white; padding:12px 24px; border-radius:8px; z-index:10000; animation:fadeInOut 2s ease;`;
+            notification.style.cssText = `
+                position: fixed; 
+                bottom: 20px; 
+                right: 20px; 
+                background: ${bgColor}; 
+                color: white; 
+                padding: 12px 24px; 
+                border-radius: 8px; 
+                z-index: 10000; 
+                animation: fadeInOut 2s ease;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                font-weight: 500;
+            `;
             document.body.appendChild(notification);
             setTimeout(() => notification.remove(), 2000);
         }
         
-        function toggleCart() { document.getElementById('cart-sidebar').classList.toggle('active'); }
+        function toggleCart() { 
+            document.getElementById('cart-sidebar').classList.toggle('active'); 
+        }
         
         function toggleTheme() {
             document.body.classList.toggle('dark-mode');
@@ -451,15 +837,6 @@
                 icon.className = 'fas fa-moon';
                 span.textContent = 'Modo Oscuro';
             }
-        }
-        
-        function processWhatsAppOrder() {
-            if (cart.length === 0) { alert('El carrito está vacío'); return; }
-            let message = 'Hola! Quiero realizar el siguiente pedido:\n\n';
-            cart.forEach((item, index) => { message += `${index + 1}. ${item.name} - $${item.price.toLocaleString()}\n`; });
-            const total = cart.reduce((sum, item) => sum + item.price, 0);
-            message += `\nTotal: $${total.toLocaleString()}`;
-            window.open(`https://wa.me/543541218523?text=${encodeURIComponent(message)}`, '_blank');
         }
         
         renderProducts();
@@ -487,7 +864,8 @@
         .close-cart { background: none; border: none; font-size: 28px; cursor: pointer; }
         .cart-items { flex: 1; overflow-y: auto; }
         .cart-total { font-size: 1.3rem; font-weight: bold; margin: 20px 0; padding-top: 10px; border-top: 1px solid #ddd; }
-        .checkout-btn { width: 100%; padding: 12px; background: #25D366; border: none; border-radius: 25px; color: white; font-weight: bold; font-size: 1rem; }
+        .checkout-btn { width: 100%; padding: 12px; background: #25D366; border: none; border-radius: 25px; color: white; font-weight: bold; font-size: 1rem; cursor: pointer; transition: transform 0.2s ease; }
+        .checkout-btn:hover { transform: scale(1.02); }
     </style>
 </body>
 </html>

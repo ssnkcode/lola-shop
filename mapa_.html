@@ -10,21 +10,394 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Google Fonts: Tipografías elegantes -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/map/map_.css">
+    <style>
+        /* ========== MODO OSCURO POR DEFECTO ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            padding-top: 80px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* MODO CLARO */
+        body.light-mode {
+            background-color: #f5f5f5;
+            color: #1a1a1a;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #0a0a0a;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease-in-out, background 0.3s ease;
+            transform: translateY(0);
+        }
+
+        body.light-mode .navbar {
+            background: #ffffff;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .navbar.navbar-hidden {
+            transform: translateY(-100%);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .nav-link-custom {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        body.light-mode .nav-link-custom {
+            color: #333333;
+        }
+
+        .nav-link-custom:hover {
+            color: #ff6b6b;
+        }
+
+        .theme-toggle {
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 25px;
+            padding: 6px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+        body.light-mode .theme-toggle {
+            background: #e0e0e0;
+            border-color: #ccc;
+            color: #333;
+        }
+
+        .mundial-btn {
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            color: #000 !important;
+            font-weight: bold;
+            border-radius: 25px;
+            padding: 8px 20px !important;
+            transition: transform 0.3s ease;
+        }
+
+        .mundial-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Location Page Styles */
+        .location-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: #aaaaaa;
+        }
+
+        body.light-mode .page-subtitle {
+            color: #666;
+        }
+
+        .streetview-hero {
+            width: 100%;
+            height: 500px;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .streetview-hero iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .map-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .map-btn {
+            background: #1e1e1e;
+            border: 2px solid #ff8e8e;
+            border-radius: 50px;
+            padding: 12px 25px;
+            color: #ff8e8e;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        body.light-mode .map-btn {
+            background: white;
+            border-color: #ff6b6b;
+            color: #ff6b6b;
+        }
+
+        .map-btn:hover {
+            background: #ff6b6b;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .map-btn.whatsapp {
+            background: #25D366;
+            border-color: #25D366;
+            color: white;
+        }
+
+        .map-btn.whatsapp:hover {
+            background: #20b859;
+            transform: scale(1.05);
+        }
+
+        .info-container {
+            background: #1a1a1a;
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 20px;
+        }
+
+        body.light-mode .info-container {
+            background: #ffffff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .info-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #ff8e8e;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .info-item i {
+            font-size: 1.5rem;
+            color: #ff8e8e;
+            margin-top: 3px;
+        }
+
+        .info-content {
+            flex: 1;
+        }
+
+        .info-content strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .hours-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .hours-table td {
+            padding: 8px 0;
+            border-bottom: 1px solid #333;
+        }
+
+        body.light-mode .hours-table td {
+            border-bottom-color: #eee;
+        }
+
+        .hours-table td:first-child {
+            font-weight: 600;
+        }
+
+        .hours-table td:last-child {
+            text-align: right;
+        }
+
+        /* Footer */
+        .footer {
+            background: #050505;
+            color: #ffffff;
+            padding: 40px 5% 20px;
+            margin-top: 60px;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        body.light-mode .footer {
+            background: #2c3e50;
+            color: #ffffff;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-info {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: #ff8e8e;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-info h4 {
+            color: inherit;
+            margin-bottom: 1rem;
+        }
+
+        .footer-info p {
+            color: inherit;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            font-size: 0.85rem;
+        }
+
+        body.light-mode .copyright {
+            border-top-color: rgba(255,255,255,0.2);
+        }
+
+        .copyright a {
+            color: #ff8e8e;
+            text-decoration: none;
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .whatsapp-float a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #25D366;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .whatsapp-float a:hover {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            body { padding-top: 70px; }
+            .streetview-hero { height: 300px; }
+            .page-title { font-size: 1.8rem; }
+            .info-grid { grid-template-columns: 1fr; gap: 30px; }
+            .nav-buttons { flex-wrap: wrap; justify-content: center; }
+        }
+    </style>
 </head>
 <body>
-    <!-- Navbar con estilo glassmorphism -->
+    <!-- Navbar con estilo oscuro por defecto -->
     <nav class="navbar">
         <a href="index.html" class="logo"><i class="fas fa-gem me-2"></i> LolaShop</a>
         <div class="nav-buttons">
             <a href="index.html" class="nav-link-custom">
                 <i class="fas fa-home"></i> Inicio
             </a>
-            <a href="mapa_.html" class="nav-link-custom active" style="background: var(--primary-color); color: white;">
+            <a href="mapa_.html" class="nav-link-custom">
                 <i class="fas fa-map-marker-alt"></i> Ubicación
             </a>
+            <a href="../mundial/mundial.html" class="nav-link-custom mundial-btn"><i class="fas fa-futbol"></i> MUNDIAL 2026</a>
             <button class="theme-toggle" onclick="toggleTheme()">
-                <i class="fas fa-moon"></i> <span>Modo Oscuro</span>
+                <i class="fas fa-moon"></i> <span>Modo Claro</span>
             </button>
         </div>
     </nav>
@@ -127,7 +500,6 @@
     </div>
 
     <!-- FOOTER -->
-    <!-- FOOTER -->
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-info">
@@ -164,6 +536,43 @@
         </a>
     </div>
 
-    <script src="js/map/map_.js"></script>
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.querySelector('.theme-toggle i');
+            const span = document.querySelector('.theme-toggle span');
+            
+            if (body.classList.contains('light-mode')) {
+                body.classList.remove('light-mode');
+                icon.className = 'fas fa-moon';
+                span.textContent = 'Modo Claro';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.classList.add('light-mode');
+                icon.className = 'fas fa-sun';
+                span.textContent = 'Modo Oscuro';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+        
+        // Inicializar tema (oscuro por defecto)
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            document.body.classList.add('light-mode');
+            const icon = document.querySelector('.theme-toggle i');
+            const span = document.querySelector('.theme-toggle span');
+            if (icon) {
+                icon.className = 'fas fa-sun';
+                span.textContent = 'Modo Oscuro';
+            }
+        } else {
+            const icon = document.querySelector('.theme-toggle i');
+            const span = document.querySelector('.theme-toggle span');
+            if (icon) {
+                icon.className = 'fas fa-moon';
+                span.textContent = 'Modo Claro';
+            }
+        }
+    </script>
 </body>
 </html>

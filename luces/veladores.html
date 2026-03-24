@@ -39,6 +39,56 @@
             flex-wrap: wrap;
         }
         
+        /* Estilos para la barra de búsqueda */
+        .search-container {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .search-input {
+            padding: 8px 35px 8px 15px;
+            border-radius: 25px;
+            border: 1px solid #ddd;
+            background: white;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.3s ease;
+            width: 200px;
+        }
+        
+        .search-input:focus {
+            border-color: #ff6b6b;
+            box-shadow: 0 0 0 2px rgba(255,107,107,0.2);
+            width: 250px;
+        }
+        
+        .search-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #ff6b6b;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+        
+        .search-btn:hover {
+            color: #ff5252;
+        }
+        
+        body.dark-mode .search-input {
+            background: #2d2d2d;
+            border-color: #555;
+            color: white;
+        }
+        
+        body.dark-mode .search-input::placeholder {
+            color: #999;
+        }
+        
         .dropdown {
             position: relative;
             display: inline-block;
@@ -241,6 +291,149 @@
             color: #666;
         }
         
+        /* Estilos para el mensaje de búsqueda sin resultados */
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+            grid-column: 1 / -1;
+        }
+        
+        .no-results i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+        
+        /* Estilos para los items del carrito */
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            position: relative;
+        }
+        
+        body.dark-mode .cart-item {
+            border-bottom-color: #444;
+        }
+        
+        .cart-item-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .cart-item-info {
+            flex: 1;
+        }
+        
+        .cart-item-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .cart-item-price {
+            font-size: 0.85rem;
+            color: #e74c3c;
+            font-weight: 600;
+        }
+        
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 6px;
+        }
+        
+        .quantity-btn {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: none;
+            background: #ff6b6b;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        
+        .quantity-btn:hover {
+            background: #ff5252;
+            transform: scale(1.05);
+        }
+        
+        .quantity-btn.minus {
+            background: #ccc;
+        }
+        
+        .quantity-btn.minus:hover {
+            background: #999;
+        }
+        
+        .cart-item-qty {
+            font-size: 0.9rem;
+            font-weight: 600;
+            min-width: 25px;
+            text-align: center;
+        }
+        
+        .cart-item-subtotal {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #2c3e50;
+            min-width: 70px;
+            text-align: right;
+        }
+        
+        body.dark-mode .cart-item-subtotal {
+            color: #ff8e8e;
+        }
+        
+        .remove-item {
+            background: none;
+            border: none;
+            color: #ff6b6b;
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 4px 8px;
+            transition: all 0.2s ease;
+        }
+        
+        .remove-item:hover {
+            color: #ff0000;
+            transform: scale(1.1);
+        }
+        
+        .cart-empty {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+        
+        .clear-cart-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: all 0.2s ease;
+        }
+        
+        .clear-cart-btn:hover {
+            background: #ff5252;
+            transform: scale(1.02);
+        }
+        
         @media (max-width: 768px) {
             body {
                 padding-top: 70px;
@@ -249,6 +442,18 @@
             .nav-buttons {
                 flex-direction: column;
                 align-items: stretch;
+                width: 100%;
+            }
+            
+            .search-container {
+                width: 100%;
+            }
+            
+            .search-input {
+                width: 100%;
+            }
+            
+            .search-input:focus {
                 width: 100%;
             }
             
@@ -320,6 +525,14 @@
                 <i class="fas fa-home"></i> Inicio
             </a>
             
+            <!-- Barra de búsqueda -->
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-input" placeholder="Buscar productos..." onkeyup="filterProducts()">
+                <button class="search-btn" onclick="filterProducts()">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            
             <div class="dropdown">
                 <a href="#" class="nav-link-custom dropdown-toggle">
                     <i class="fas fa-tags"></i> Productos
@@ -367,7 +580,7 @@
         <h1 id="category-title"><i class="fas fa-star-of-life me-2"></i> Veladores</h1>
         <div class="products-grid" id="products-grid"></div>
         
-        <div class="pagination">
+        <div class="pagination" id="pagination">
             <button class="page-btn" onclick="prevPage()">← Anterior</button>
             <span class="page-info" id="page-info">Página 1 de 2</span>
             <button class="page-btn" onclick="nextPage()">Siguiente →</button>
@@ -382,7 +595,7 @@
         <div class="cart-items" id="cart-items"></div>
         <div class="cart-total" id="cart-total">Total: $0</div>
         <button class="checkout-btn" onclick="processWhatsAppOrder()">
-            <i class="fab fa-whatsapp"></i> Proceder al Pago
+            <i class="fab fa-whatsapp"></i> Finalizar Compra
         </button>
     </div>
 
@@ -391,7 +604,7 @@
             <div class="footer-info">
                 <div>
                     <a href="../index.html" class="footer-logo"><i class="fas fa-gem me-2"></i> CodeShop</a>
-                    <p>Tu tienda de confianza en Cosquín</p>
+                    <p>Tu tienda de confianza en Santa María</p>
                 </div>
                 <div>
                     <h4 style="color: var(--text-color); margin-bottom: 1rem;">Contacto Rápido</h4>
@@ -422,53 +635,122 @@
     <script>
         // Productos de Veladores - Página 1
         const productsPage1 = [
-            { name: "Velador Estrella", price: 8500, image: "../assets/luces/veladores/1/image00005-400x400.webp" },
-            { name: "Velador Moderno", price: 9200, image: "../assets/luces/veladores/1/IMG_2081-400x400.webp" },
-            { name: "Velador Clásico", price: 7800, image: "../assets/luces/veladores/1/IMG_4007-400x400.webp" },
-            { name: "Velador Elegante", price: 10500, image: "../assets/luces/veladores/1/IMG_4965-scaled-e1732574225808-400x400.webp" },
-            { name: "Velador Avioncito", price: 6900, image: "../assets/luces/veladores/1/velador-avioncito-400x400.webp" },
-            { name: "Velador Nórdico", price: 8800, image: "../assets/luces/veladores/1/WhatsApp-Image-2025-01-16-at-10.53.43-PM-400x400.webp" },
-            { name: "Velador Industrial", price: 9500, image: "../assets/luces/veladores/1/WhatsApp-Image-2025-01-17-at-7.35.29-PM-400x400.webp" },
-            { name: "Velador Vintage", price: 10200, image: "../assets/luces/veladores/1/WhatsApp-Image-2025-01-17-at-7.57.47-PM-400x400.webp" },
-            { name: "Velador Minimalista", price: 8200, image: "../assets/luces/veladores/1/WhatsApp-Image-2025-01-17-at-8.01.29-PM-400x400.webp" },
-            { name: "Velador LED", price: 11500, image: "../assets/luces/veladores/1/WhatsApp-Image-2025-01-21-at-4.04.51-PM-400x400.webp" },
-            { name: "Velador Bambú", price: 7600, image: "../assets/luces/veladores/1/WhatsApp-Image-2025-01-23-at-4.00.57-PM-400x400.webp" },
-            { name: "Velador Rústico", price: 8900, image: "../assets/luces/veladores/1/WhatsApp-Image-2025-01-23-at-4.06.19-PM-400x285.webp" },
-            { name: "Velador Cristal", price: 12800, image: "../assets/luces/veladores/1/WhatsApp-Image-2025-01-24-at-11.17.21-AM-400x400.webp" },
-            { name: "Velador Madera", price: 9800, image: "../assets/luces/veladores/1/WhatsApp-Image-2025-01-30-at-12.57.01-PM-scaled-e1738260948473-400x400.webp" },
-            { name: "Velador Metálico", price: 11200, image: "../assets/luces/veladores/1/WhatsApp-Image-2025-01-30-at-4.40.45-PM-400x400.webp" },
-            { name: "Velador Romántico", price: 8400, image: "../assets/luces/veladores/1/WhatsApp-Image-2025-02-04-at-12.24.35-400x400.webp" },
-            { name: "Velador Infantil", price: 7200, image: "../assets/luces/veladores/1/WhatsApp-Image-2025-09-01-at-1.42.03-PM-2-400x400.webp" },
-            { name: "Velador Moderno 2026", price: 13500, image: "../assets/luces/veladores/1/WhatsApp-Image-2026-02-18-at-6.47.42-PM-2-400x400.webp" }
+            { id: 1, name: "Velador Estrella", price: 8500, image: "../assets/luces/veladores/1/image00005-400x400.webp" },
+            { id: 2, name: "Velador Moderno", price: 9200, image: "../assets/luces/veladores/1/IMG_2081-400x400.webp" },
+            { id: 3, name: "Velador Clásico", price: 7800, image: "../assets/luces/veladores/1/IMG_4007-400x400.webp" },
+            { id: 4, name: "Velador Elegante", price: 10500, image: "../assets/luces/veladores/1/IMG_4965-scaled-e1732574225808-400x400.webp" },
+            { id: 5, name: "Velador Avioncito", price: 6900, image: "../assets/luces/veladores/1/velador-avioncito-400x400.webp" },
+            { id: 6, name: "Velador Nórdico", price: 8800, image: "../assets/luces/veladores/1/WhatsApp-Image-2025-01-16-at-10.53.43-PM-400x400.webp" },
+            { id: 7, name: "Velador Industrial", price: 9500, image: "../assets/luces/veladores/1/WhatsApp-Image-2025-01-17-at-7.35.29-PM-400x400.webp" },
+            { id: 8, name: "Velador Vintage", price: 10200, image: "../assets/luces/veladores/1/WhatsApp-Image-2025-01-17-at-7.57.47-PM-400x400.webp" },
+            { id: 9, name: "Velador Minimalista", price: 8200, image: "../assets/luces/veladores/1/WhatsApp-Image-2025-01-17-at-8.01.29-PM-400x400.webp" },
+            { id: 10, name: "Velador LED", price: 11500, image: "../assets/luces/veladores/1/WhatsApp-Image-2025-01-21-at-4.04.51-PM-400x400.webp" },
+            { id: 11, name: "Velador Bambú", price: 7600, image: "../assets/luces/veladores/1/WhatsApp-Image-2025-01-23-at-4.00.57-PM-400x400.webp" },
+            { id: 12, name: "Velador Rústico", price: 8900, image: "../assets/luces/veladores/1/WhatsApp-Image-2025-01-23-at-4.06.19-PM-400x285.webp" },
+            { id: 13, name: "Velador Cristal", price: 12800, image: "../assets/luces/veladores/1/WhatsApp-Image-2025-01-24-at-11.17.21-AM-400x400.webp" },
+            { id: 14, name: "Velador Madera", price: 9800, image: "../assets/luces/veladores/1/WhatsApp-Image-2025-01-30-at-12.57.01-PM-scaled-e1738260948473-400x400.webp" },
+            { id: 15, name: "Velador Metálico", price: 11200, image: "../assets/luces/veladores/1/WhatsApp-Image-2025-01-30-at-4.40.45-PM-400x400.webp" },
+            { id: 16, name: "Velador Romántico", price: 8400, image: "../assets/luces/veladores/1/WhatsApp-Image-2025-02-04-at-12.24.35-400x400.webp" },
+            { id: 17, name: "Velador Infantil", price: 7200, image: "../assets/luces/veladores/1/WhatsApp-Image-2025-09-01-at-1.42.03-PM-2-400x400.webp" },
+            { id: 18, name: "Velador Moderno 2026", price: 13500, image: "../assets/luces/veladores/1/WhatsApp-Image-2026-02-18-at-6.47.42-PM-2-400x400.webp" }
         ];
         
         // Productos de Veladores - Página 2
         const productsPage2 = [
-            { name: "Velador Premium", price: 14500, image: "../assets/luces/veladores/2/Copia-de-LISTA-DE-ILUMINACION-MAR-1250-400x400.jpg" },
-            { name: "Velador Diseño", price: 15800, image: "../assets/luces/veladores/2/IMG_4304-400x400.jpg" },
-            { name: "Velador Artesanal", price: 13200, image: "../assets/luces/veladores/2/IMG_4319-400x400.jpg" },
-            { name: "Velador Boho", price: 11800, image: "../assets/luces/veladores/2/IMG_5153-400x400.webp" },
-            { name: "Velador Nórdico 2", price: 9600, image: "../assets/luces/veladores/2/IMG_8437-400x400.webp" },
-            { name: "Velador Simple", price: 6800, image: "../assets/luces/veladores/2/IMG_8439-400x400.webp" },
-            { name: "Velador Creativo", price: 8900, image: "../assets/luces/veladores/2/Picsart_24-01-11_16-41-33-5993-400x400.webp" },
-            { name: "Velador Acero", price: 12500, image: "../assets/luces/veladores/2/WhatsApp-Image-2025-01-17-at-6.02.13-PM-1-400x400.webp" },
-            { name: "Velador Oro", price: 16800, image: "../assets/luces/veladores/2/WhatsApp-Image-2025-01-17-at-7.25.48-PM-400x400.webp" },
-            { name: "Velador Plata", price: 15200, image: "../assets/luces/veladores/2/WhatsApp-Image-2025-01-17-at-8.04.42-PM-400x400.webp" },
-            { name: "Velador Cobre", price: 13800, image: "../assets/luces/veladores/2/WhatsApp-Image-2025-02-07-at-09.38.32-400x400.webp" },
-            { name: "Velador Japandi", price: 14200, image: "../assets/luces/veladores/2/WhatsApp-Image-2025-06-26-at-6.50.34-PM-400x400.jpeg" },
-            { name: "Velador Escandinavo", price: 12800, image: "../assets/luces/veladores/2/WhatsApp-Image-2025-07-08-at-11.05.39-AM-2-400x400.webp" },
-            { name: "Velador Original", price: 10500, image: "../assets/luces/veladores/2/WhatsApp-Image-2025-08-12-at-7.31.14-PM-400x400.webp" },
-            { name: "Velador Navideño", price: 8800, image: "../assets/luces/veladores/2/WhatsApp-Image-2025-12-24-at-11.13.30-AM-400x400.webp" },
-            { name: "Velador Exclusivo", price: 19500, image: "../assets/luces/veladores/2/WhatsApp-Image-2026-02-18-at-6.45.48-PM-1-400x400.webp" },
-            { name: "Velador Edición Limitada", price: 22500, image: "../assets/luces/veladores/2/WhatsApp-Image-2026-02-18-at-6.46.46-PM-400x400.webp" }
+            { id: 19, name: "Velador Premium", price: 14500, image: "../assets/luces/veladores/2/Copia-de-LISTA-DE-ILUMINACION-MAR-1250-400x400.jpg" },
+            { id: 20, name: "Velador Diseño", price: 15800, image: "../assets/luces/veladores/2/IMG_4304-400x400.jpg" },
+            { id: 21, name: "Velador Artesanal", price: 13200, image: "../assets/luces/veladores/2/IMG_4319-400x400.jpg" },
+            { id: 22, name: "Velador Boho", price: 11800, image: "../assets/luces/veladores/2/IMG_5153-400x400.webp" },
+            { id: 23, name: "Velador Nórdico 2", price: 9600, image: "../assets/luces/veladores/2/IMG_8437-400x400.webp" },
+            { id: 24, name: "Velador Simple", price: 6800, image: "../assets/luces/veladores/2/IMG_8439-400x400.webp" },
+            { id: 25, name: "Velador Creativo", price: 8900, image: "../assets/luces/veladores/2/Picsart_24-01-11_16-41-33-5993-400x400.webp" },
+            { id: 26, name: "Velador Acero", price: 12500, image: "../assets/luces/veladores/2/WhatsApp-Image-2025-01-17-at-6.02.13-PM-1-400x400.webp" },
+            { id: 27, name: "Velador Oro", price: 16800, image: "../assets/luces/veladores/2/WhatsApp-Image-2025-01-17-at-7.25.48-PM-400x400.webp" },
+            { id: 28, name: "Velador Plata", price: 15200, image: "../assets/luces/veladores/2/WhatsApp-Image-2025-01-17-at-8.04.42-PM-400x400.webp" },
+            { id: 29, name: "Velador Cobre", price: 13800, image: "../assets/luces/veladores/2/WhatsApp-Image-2025-02-07-at-09.38.32-400x400.webp" },
+            { id: 30, name: "Velador Japandi", price: 14200, image: "../assets/luces/veladores/2/WhatsApp-Image-2025-06-26-at-6.50.34-PM-400x400.jpeg" },
+            { id: 31, name: "Velador Escandinavo", price: 12800, image: "../assets/luces/veladores/2/WhatsApp-Image-2025-07-08-at-11.05.39-AM-2-400x400.webp" },
+            { id: 32, name: "Velador Original", price: 10500, image: "../assets/luces/veladores/2/WhatsApp-Image-2025-08-12-at-7.31.14-PM-400x400.webp" },
+            { id: 33, name: "Velador Navideño", price: 8800, image: "../assets/luces/veladores/2/WhatsApp-Image-2025-12-24-at-11.13.30-AM-400x400.webp" },
+            { id: 34, name: "Velador Exclusivo", price: 19500, image: "../assets/luces/veladores/2/WhatsApp-Image-2026-02-18-at-6.45.48-PM-1-400x400.webp" },
+            { id: 35, name: "Velador Edición Limitada", price: 22500, image: "../assets/luces/veladores/2/WhatsApp-Image-2026-02-18-at-6.46.46-PM-400x400.webp" }
         ];
         
+        // Unir todos los productos para la búsqueda
+        const allProducts = [...productsPage1, ...productsPage2];
+        
         let currentPage = 1;
-        let cart = [];
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
         let lastScrollTop = 0;
         let scrollTimeout;
+        let currentSearchTerm = '';
+        
+        function saveCart() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+        
+        function filterProducts() {
+            const searchInput = document.getElementById('searchInput');
+            currentSearchTerm = searchInput.value.toLowerCase().trim();
+            
+            if (currentSearchTerm === '') {
+                // Si no hay término de búsqueda, mostrar la paginación normal
+                renderProducts();
+                document.getElementById('pagination').style.display = 'flex';
+                return;
+            }
+            
+            // Filtrar productos por nombre
+            const filteredProducts = allProducts.filter(product => 
+                product.name.toLowerCase().includes(currentSearchTerm)
+            );
+            
+            // Ocultar paginación cuando se busca
+            document.getElementById('pagination').style.display = 'none';
+            
+            // Mostrar resultados filtrados
+            const grid = document.getElementById('products-grid');
+            grid.innerHTML = '';
+            
+            if (filteredProducts.length === 0) {
+                grid.innerHTML = `
+                    <div class="no-results">
+                        <i class="fas fa-search"></i>
+                        <h3>No se encontraron productos</h3>
+                        <p>No hay resultados para "${searchInput.value}"</p>
+                        <small>Prueba con otra palabra o revisa la ortografía</small>
+                    </div>
+                `;
+                document.getElementById('category-title').innerHTML = `<i class="fas fa-star-of-life me-2"></i> Resultados de búsqueda: "${searchInput.value}"`;
+                return;
+            }
+            
+            document.getElementById('category-title').innerHTML = `<i class="fas fa-star-of-life me-2"></i> Resultados (${filteredProducts.length} productos) para: "${searchInput.value}"`;
+            
+            filteredProducts.forEach((product) => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" class="product-image" onerror="this.src='https://via.placeholder.com/400x400?text=Imagen+no+disponible'">
+                    <div class="product-info">
+                        <h3 class="product-title">${product.name}</h3>
+                        <div class="product-price">$${product.price.toLocaleString()}</div>
+                        <button class="add-to-cart" onclick="addToCart(${product.id}, '${product.name}', ${product.price}, '${product.image}')">
+                            <i class="fas fa-shopping-cart"></i> Agregar al carrito
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
         
         function renderProducts() {
+            // Si hay búsqueda activa, no renderizar la paginación normal
+            if (currentSearchTerm !== '') {
+                filterProducts();
+                return;
+            }
+            
             const products = currentPage === 1 ? productsPage1 : productsPage2;
             const grid = document.getElementById('products-grid');
             grid.innerHTML = '';
@@ -481,7 +763,7 @@
                     <div class="product-info">
                         <h3 class="product-title">${product.name}</h3>
                         <div class="product-price">$${product.price.toLocaleString()}</div>
-                        <button class="add-to-cart" onclick="addToCart('${product.name}', ${product.price}, '${product.image}')">
+                        <button class="add-to-cart" onclick="addToCart(${product.id}, '${product.name}', ${product.price}, '${product.image}')">
                             <i class="fas fa-shopping-cart"></i> Agregar al carrito
                         </button>
                     </div>
@@ -490,13 +772,113 @@
             });
             
             document.getElementById('page-info').textContent = `Página ${currentPage} de 2`;
+            document.getElementById('category-title').innerHTML = `<i class="fas fa-star-of-life me-2"></i> Veladores`;
+            document.getElementById('pagination').style.display = 'flex';
         }
         
-        function nextPage() { if (currentPage < 2) { currentPage++; renderProducts(); window.scrollTo({ top: 0, behavior: 'smooth' }); } }
-        function prevPage() { if (currentPage > 1) { currentPage--; renderProducts(); window.scrollTo({ top: 0, behavior: 'smooth' }); } }
+        function nextPage() { 
+            if (currentSearchTerm !== '') return;
+            if (currentPage < 2) { 
+                currentPage++; 
+                renderProducts(); 
+                window.scrollTo({ top: 0, behavior: 'smooth' }); 
+            } 
+        }
         
-        function addToCart(name, price, image) { cart.push({ name, price, image }); updateCartCount(); showNotification(`${name} agregado al carrito`); }
-        function updateCartCount() { document.getElementById('cart-count').textContent = cart.length; }
+        function prevPage() { 
+            if (currentSearchTerm !== '') return;
+            if (currentPage > 1) { 
+                currentPage--; 
+                renderProducts(); 
+                window.scrollTo({ top: 0, behavior: 'smooth' }); 
+            } 
+        }
+        
+        function addToCart(id, name, price, image) {
+            const existingItem = cart.find(item => item.id === id);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ id, name, price, image, quantity: 1 });
+            }
+            saveCart();
+            updateCartUI();
+            showNotification(`${name} agregado al carrito`);
+        }
+        
+        function updateQuantity(id, change) {
+            const item = cart.find(item => item.id === id);
+            if (item) {
+                const newQuantity = item.quantity + change;
+                if (newQuantity <= 0) {
+                    removeItem(id);
+                } else {
+                    item.quantity = newQuantity;
+                    saveCart();
+                    updateCartUI();
+                }
+            }
+        }
+        
+        function removeItem(id) {
+            cart = cart.filter(item => item.id !== id);
+            saveCart();
+            updateCartUI();
+            showNotification('Producto eliminado del carrito');
+        }
+        
+        function clearCart() {
+            if (cart.length > 0 && confirm('¿Estás seguro de vaciar el carrito?')) {
+                cart = [];
+                saveCart();
+                updateCartUI();
+                showNotification('Carrito vaciado');
+            }
+        }
+        
+        function updateCartUI() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartTotalElement = document.getElementById('cart-total');
+            const cartCountElement = document.getElementById('cart-count');
+            
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCountElement.textContent = totalItems;
+            
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<div class="cart-empty"><i class="fas fa-shopping-cart" style="font-size: 3rem; margin-bottom: 15px; opacity: 0.5;"></i><br>Tu carrito está vacío</div>';
+                cartTotalElement.textContent = 'Total: $0';
+                return;
+            }
+            
+            let cartHTML = `<button class="clear-cart-btn" onclick="clearCart()"><i class="fas fa-trash-alt"></i> Vaciar carrito</button>`;
+            
+            cart.forEach(item => {
+                const subtotal = item.price * item.quantity;
+                cartHTML += `
+                    <div class="cart-item">
+                        <img src="${item.image}" alt="${item.name}" class="cart-item-image" onerror="this.src='https://via.placeholder.com/60x60?text=No+image'">
+                        <div class="cart-item-info">
+                            <div class="cart-item-name">${item.name}</div>
+                            <div class="cart-item-price">$${item.price.toLocaleString()}</div>
+                            <div class="cart-item-quantity">
+                                <button class="quantity-btn minus" onclick="updateQuantity(${item.id}, -1)">-</button>
+                                <span class="cart-item-qty">${item.quantity}</span>
+                                <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                            </div>
+                        </div>
+                        <div class="cart-item-subtotal">$${subtotal.toLocaleString()}</div>
+                        <button class="remove-item" onclick="removeItem(${item.id})" title="Eliminar">
+                            <i class="fas fa-times-circle"></i>
+                        </button>
+                    </div>
+                `;
+            });
+            
+            cartItemsContainer.innerHTML = cartHTML;
+            
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            cartTotalElement.textContent = `Total: $${total.toLocaleString()}`;
+        }
         
         function showNotification(message) {
             const notification = document.createElement('div');
@@ -522,34 +904,47 @@
         }
         
         function processWhatsAppOrder() {
-            if (cart.length === 0) { alert('El carrito está vacío'); return; }
-            let message = 'Hola! Quiero realizar el siguiente pedido:\n\n';
-            cart.forEach((item, index) => { message += `${index + 1}. ${item.name} - $${item.price.toLocaleString()}\n`; });
-            const total = cart.reduce((sum, item) => sum + item.price, 0);
-            message += `\nTotal: $${total.toLocaleString()}`;
-            window.open(`https://wa.me/543541218523?text=${encodeURIComponent(message)}`, '_blank');
+            if (cart.length === 0) { 
+                alert('El carrito está vacío'); 
+                return; 
+            }
+            
+            let message = '🛍️ *NUEVO PEDIDO - CodeShop* 🛍️\n\n';
+            message += '*DETALLE DE LA COMPRA:*\n';
+            message += '─'.repeat(30) + '\n\n';
+            
+            cart.forEach((item, index) => {
+                const subtotal = item.price * item.quantity;
+                message += `*${index + 1}. ${item.name}*\n`;
+                message += `   📦 Cantidad: ${item.quantity}\n`;
+                message += `   💰 Precio unitario: $${item.price.toLocaleString()}\n`;
+                message += `   💵 Subtotal: $${subtotal.toLocaleString()}\n\n`;
+            });
+            
+            message += '─'.repeat(30) + '\n';
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            message += `*💰 TOTAL DEL PEDIDO: $${total.toLocaleString()}*\n\n`;
+            message += '─'.repeat(30) + '\n\n';
+            message += '*📞 En un momento serás atendido por un asesor...*\n';
+            message += '¡Gracias por tu compra! 🙌';
+            
+            window.open(`https://wa.me/543541682310?text=${encodeURIComponent(message)}`, '_blank');
         }
         
-        // Función para manejar el scroll y ocultar/mostrar el navbar
         function handleScroll() {
             const navbar = document.querySelector('.navbar');
             const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
             
-            // Limpiar el timeout anterior
             if (scrollTimeout) {
                 clearTimeout(scrollTimeout);
             }
             
-            // Si se scrolleó hacia abajo y no estamos en el top
             if (currentScrollTop > lastScrollTop && currentScrollTop > 50) {
-                // Scroll hacia abajo - ocultar navbar
                 navbar.classList.add('navbar-hidden');
             } else if (currentScrollTop < lastScrollTop) {
-                // Scroll hacia arriba - mostrar navbar
                 navbar.classList.remove('navbar-hidden');
             }
             
-            // Si llegamos al top, mostrar navbar
             if (currentScrollTop <= 10) {
                 navbar.classList.remove('navbar-hidden');
             }
@@ -558,6 +953,7 @@
         }
         
         renderProducts();
+        updateCartUI();
         
         function initMobileMenus() {
             if (window.innerWidth <= 768) {
@@ -572,8 +968,6 @@
         }
         initMobileMenus();
         window.addEventListener('resize', () => { if (window.innerWidth > 768) { document.querySelectorAll('.dropdown.active, .submenu.active').forEach(el => el.classList.remove('active')); } initMobileMenus(); });
-        
-        // Agregar el evento de scroll
         window.addEventListener('scroll', handleScroll);
     </script>
     <style>
@@ -585,7 +979,8 @@
         .close-cart { background: none; border: none; font-size: 28px; cursor: pointer; }
         .cart-items { flex: 1; overflow-y: auto; }
         .cart-total { font-size: 1.3rem; font-weight: bold; margin: 20px 0; padding-top: 10px; border-top: 1px solid #ddd; }
-        .checkout-btn { width: 100%; padding: 12px; background: #25D366; border: none; border-radius: 25px; color: white; font-weight: bold; font-size: 1rem; }
+        .checkout-btn { width: 100%; padding: 12px; background: #25D366; border: none; border-radius: 25px; color: white; font-weight: bold; font-size: 1rem; cursor: pointer; transition: all 0.2s ease; }
+        .checkout-btn:hover { transform: scale(1.02); background: #20b859; }
     </style>
 </body>
 </html>
