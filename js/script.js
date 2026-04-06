@@ -24,7 +24,8 @@ function cargarProductos() {
             let categoriasCount = {
                 Vasos: 0, Botellas: 0, Parlantes: 0, Auriculares: 0, Lámparas: 0,
                 Perfumes: 0, Maquillaje: 0, Cables: 0, Mochilas: 0, Juguetes: 0,
-                Hogar: 0, Termos: 0, Accesorios: 0, Tecnología: 0, Mundial: 0, Capibara: 0
+                Hogar: 0, Termos: 0, Accesorios: 0, Tecnología: 0, Mundial: 0, Capibara: 0,
+                Papelería: 0, Fiestas: 0, Salud: 0
             };
             
             // USAR calculate%.js para calcular los precios correctamente
@@ -137,7 +138,7 @@ function renderProducts() {
         card.className = 'product-card';
         const priceValue = Math.round(product.price);
         card.innerHTML = `
-            <img src="${product.image}" alt="${escapeHtml(product.name)}" class="product-image" loading="lazy" onerror="this.src='https://via.placeholder.com/400x400?text=LolaShop'">
+            <img src="${product.image}" alt="${escapeHtml(product.name)}" class="product-image" loading="lazy" onerror="this.src='https://via.placeholder.com/400x400?text=SSNKcode'">
             <div class="product-info">
                 <h3 class="product-title">${escapeHtml(product.name)}</h3>
                 <div class="product-price">${formatPrice(priceValue)}</div>
@@ -320,15 +321,15 @@ function processWhatsAppOrder() {
         return;
     }
     
-    let message = '🛍️ *NUEVO PEDIDO - LolaShop* 🛍️\n\n*DETALLE DEL PEDIDO:*\n';
+    let message = '🛍️ *NUEVO PEDIDO - SSNKcode* 🛍️\n\n*DETALLE DEL PEDIDO:*\n';
     cart.forEach((item, i) => {
         message += `${i+1}. ${item.name} x${item.quantity} - ${formatPrice(item.price * item.quantity)}\n`;
     });
     const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     message += `\n*TOTAL: ${formatPrice(total)}*`;
-    message += `\n\n📍 *Local: Cosquín*`;
+    message += `\n\n📍 *Local: Santa María*`;
     
-    window.open(`https://wa.me/543541218523?text=${encodeURIComponent(message)}`, '_blank');
+    window.open(`https://wa.me/543541682310?text=${encodeURIComponent(message)}`, '_blank');
 }
 
 function handleScroll() {
